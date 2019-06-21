@@ -1,37 +1,51 @@
 
 import csv
 
-with open('/Users/heather/Downloads/03-Python_Homework_PyBank_Resources_budget_data.csv', 'r') as csv_file:
+filename = ("Resources", "budget_data.csv")
+month_count = 0
+total_revenue = 0
+this_month_revenue = 0
+last_month_revenue = 0
+revenue_change = 0
+revenue_changes = []
+months = []
+filepath = ("Resources", "budget_data.csv")
+with open(filepath,'r', newline="") as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=",")
+    next(csvreader)
+    for row in csvreader:
+        month_count = month_count + 1
+        months.append(row[0])
+        this_month_revenue = int(row[1])
+        total_revenue = total_revenue + this_month_revenue
+        if month_count > 1:
+            revenue_change = this_month_revenue - last_month_revenue
+            revenue_changes.append(revenue_change)
+        last_month_revenue = this_month_revenue
+sum_rev_changes = sum(revenue_changes)
+average_change = sum_rev_changes / (month_count - 1)
+max_change = max(revenue_changes)
+min_change = min(revenue_changes)
+max_month_index = revenue_changes.index(max_change)
+min_month_index = revenue_changes.index(min_change)
+max_month = months[max_month_index]
+min_month = months[min_month_index]
 
-    csv_reader = csv.reader(csv_file, delimiter=",")
-    csv_header = next(csv_reader)
-    months = []
-    profits_losses = []
-    monthly_net = []
+print("Financial Analysis")
+print("---------------------------------")
+print(f"Total Months: {month_count}")
+print(f"Total Revenue: ${total_revenue}")
+print(f"Average Revenue Change: $" + str(round(average_change,2)))
+print(f"Greatest Increase in Revenue: {max_month} (${max_change})")
+print(f"Greatest Decrease in Revenue: {min_month} (${min_change})")
 
-    for row in csv_reader:
-        months.append(str(row[0]))
-        profits_losses.append(int(row[1]))
-
-    for i in range(len(profits_losses) - 1):
-        change = profits_losses[i + 1] - profits_losses[i]
-        monthly_net.append(change)
-        increase_month = row[0]
-        decrease_month = row[0]
-
-    total = sum(profits_losses)
-    total_months = len(months)
-    average_change = (sum(monthly_net)) / (len(monthly_net))
-
-print('''Financial Analysis
-----------------------''')
-
-print("Total Months: " + str(total_months))
-
-print("Total: $" + str(total.__format__(",")))
-
-print("Average Change: $" + str(round(average_change, 2)))
-
-print("Greatest Increase in Profits: $" + str(max(monthly_net)))
-
-print("Greatest Decrease in Profits: $" + str(min(monthly_net)))
+save_file = filename.strip(".csv") + "_results.txt"
+filepath = ("pybank.txt", save_file)
+with open("pybank.txt",'w') as text:
+    text.write("Financial Analysis" + "\n")
+    text.write("----------------------------------------" + "\n")
+    text.write(f"Total Months: {month_count}" + "\n")
+    text.write(f"Total Revenue: ${total_revenue}" + "\n")
+    text.write(f"Average Revenue Change: ${average_change}" + "\n")
+    text.write(f"Greatest Increase in Revenue: {max_month} (${max_change})" + "\n")
+    text.write(f"Greatest Decrease in Revenue: {min_month} (${min_change})" + "\n")
