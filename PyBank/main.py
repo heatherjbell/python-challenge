@@ -28,8 +28,8 @@ max_change = max(revenue_changes)
 min_change = min(revenue_changes)
 max_month_index = revenue_changes.index(max_change)
 min_month_index = revenue_changes.index(min_change)
-max_month = months[max_month_index] + 1
-min_month = months[min_month_index] + 1
+max_month = months[max_month_index + 1]
+min_month = months[min_month_index + 1]
 
 print("Financial Analysis")
 print("---------------------------------")
