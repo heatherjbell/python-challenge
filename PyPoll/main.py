@@ -22,7 +22,7 @@ percentages = []
 max_votes = vote_counts[0]
 max_index = 0
 for count in range(len(candidates)):
-    vote_percentage = vote_counts[count]/num_votes*100
+    vote_percentage = (round(vote_counts[count]/num_votes*100))
     percentages.append(vote_percentage)
     if vote_counts[count] > max_votes:
         max_votes = vote_counts[count]
@@ -33,6 +33,7 @@ winner = candidates[max_index]
 print("Election Results")
 print("--------------------------")
 print(f"Total Votes: {num_votes}")
+print("--------------------------")
 for count in range(len(candidates)):
     print(f"{candidates[count]}: {percentages[count]}% ({vote_counts[count]})")
 print("---------------------------")
@@ -45,9 +46,9 @@ filewriter = open(write_file, mode = 'w')
 filewriter.write("Election Results\n")
 filewriter.write("--------------------------\n")
 filewriter.write(f"Total Votes: {num_votes}\n")
+filewriter.write("--------------------------\n")
 for count in range(len(candidates)):
     filewriter.write(f"{candidates[count]}: {percentages[count]}% ({vote_counts[count]})\n")
 filewriter.write("---------------------------\n")
 filewriter.write(f"Winner: {winner}\n")
-filewriter.write("---------------------------\n")
-
+filewriter.write("--------------------------
